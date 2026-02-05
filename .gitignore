@@ -117,3 +117,18 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# Firebase config (API keys)                                                                                                                      android/app/google-services.json                                                                                                                  
+ios/Runner/GoogleService-Info.plist                                                                                                               
+macos/Runner/GoogleService-Info.plist                                                                                                             
+lib/firebase_options.dart                                                                                                                         
+                                                                                                                                                    # Firebase cache
+.firebase/
+# Cloud Functions dependencies
+functions/node_modules/
+
+# Flutter generated
+.flutter-plugins
+
+# macOS DS_Store (tüm alt klasörler dahil)
+**/.DS_Store
