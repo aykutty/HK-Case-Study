@@ -50,18 +50,18 @@ flutter run -d chrome
 # Mimari Yaklaşım
 
 ## Kullanılan Mimari
-MVVM + Repository Pattern
+* MVVM + Repository Pattern
 
-GetX → State Management & Routing
+* GetX → State Management & Routing
 
-Firebase → Auth, Firestore, Cloud Functions
+* Firebase → Auth, Firestore, Cloud Functions
 
 ## Repository Mantığı
-UserRepository
+- UserRepository
 
 Firestore /users/{uid} okuma
 
-LoginSessionRepository
+- LoginSessionRepository
 
 QR session oluşturma
 
@@ -113,12 +113,12 @@ FirebaseAuth.currentUser.uid erişilebilir
 Profil ekranı açılır 
 
 ## Güvenlik Avantajları
-QR session tek kullanımlık
+* QR session tek kullanımlık
 
-Session süreli (expire)
+* Session süreli (expire)
 
-Web tarafı doğrudan userId alamaz
+* Web tarafı doğrudan userId alamaz
 
-Giriş onayı mobil cihazdan yapılır
+* Giriş onayı mobil cihazdan yapılır
 
-Firestore Rules + Firebase Auth birlikte çalışır
+* Firestore Rules + Firebase Auth birlikte çalışır
