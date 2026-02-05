@@ -25,17 +25,16 @@ Android için google-services.json
 Flutter için firebase_options.dart (FlutterFire CLI ile)
 ```
 ## Firebase Security Rules
-```bash
-/users/{uid} → sadece request.auth.uid == uid okuyabilir
+* /users/{uid} → sadece request.auth.uid == uid okuyabilir
 
-/login_sessions/{sessionId}
+* /login_sessions/{sessionId}
 
-Web → session oluşturabilir
+* Web → session oluşturabilir
 
-Mobil (login olmuş user) → session onaylayabilir
+* Mobil (login olmuş user) → session onaylayabilir
 
-Detaylı kurallar projede firestore.rules dosyasında yer alıyor.
-```
+* Detaylı kurallar projede firestore.rules dosyasında yer alıyor.
+
 
 ## Cloud Function (Web Login Token)
 ```bash
@@ -59,17 +58,17 @@ flutter run -d chrome
 ## Repository Mantığı
 - UserRepository
 
-Firestore /users/{uid} okuma
+	* Firestore /users/{uid} okuma
 
 - LoginSessionRepository
 
-QR session oluşturma
+	* QR session oluşturma
 
-Session onaylama
+	* Session onaylama
 
-Session dinleme (stream)
+	* Session dinleme (stream)
 
-Controller katmanı doğrudan Firebase API çağırmaz, sadece repository kullanır.
+	* Controller katmanı doğrudan Firebase API çağırmaz, sadece repository kullanır.
 
 # QR Login Akışı
 ## Web – QR Session Oluşturma
