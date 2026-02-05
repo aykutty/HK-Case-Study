@@ -3,7 +3,7 @@ class LoginSession {
   final String status;
   final DateTime createdAt;
   final DateTime expiresAt;
-  final String? approvedByUid;
+  final String? approvedBy; 
   final DateTime? approvedAt;
 
   LoginSession({
@@ -11,7 +11,7 @@ class LoginSession {
     required this.status,
     required this.createdAt,
     required this.expiresAt,
-    this.approvedByUid,
+    this.approvedBy,   
     this.approvedAt,
   });
 
@@ -24,7 +24,7 @@ class LoginSession {
       status: map['status'],
       createdAt: map['createdAt'].toDate(),
       expiresAt: map['expiresAt'].toDate(),
-      approvedByUid: map['approvedByUid'],
+      approvedBy: map['approvedBy'],
       approvedAt:
           map['approvedAt'] != null ? map['approvedAt'].toDate() : null,
     );
@@ -35,7 +35,7 @@ class LoginSession {
       'status': status,
       'createdAt': createdAt,
       'expiresAt': expiresAt,
-      'approvedByUid': approvedByUid,
+      'approvedBy': approvedBy,   
       'approvedAt': approvedAt,
     };
   }

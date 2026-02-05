@@ -15,15 +15,19 @@ class WebLoginController extends GetxController {
   final RxString error = ''.obs;
 
   StreamSubscription? _sub;
+  Timer? _expiryTimer;                                                                                                               
+  bool _isProcessing = false; 
 
   Future<void> startQrLogin() async {
     try {
       isLoading.value = true;
       error.value = '';
+      _isProcessing = false; 
 
       final id = await repo.createSession();
       sessionId.value = id;
       _listenSession(id);
+      _startExpiryTimer();
     } catch (e) {
       error.value = 'QR oluşturulamadı';
     } finally {
@@ -35,10 +39,14 @@ class WebLoginController extends GetxController {
     _sub?.cancel();
 
     _sub = repo.watchSession(id).listen((doc) async {
-      if (!doc.exists) return;
+      if (!doc.exists || _isProcessing) return;  
 
       final data = doc.data()!;
       if (data['status'] == 'approved') {
+        _isProcessing = true;
+        _sub?.cancel();
+        _expiryTimer?.cancel();
+
         try {
           final callable = functions.httpsCallable('createWebLoginToken');
 
@@ -49,6 +57,7 @@ class WebLoginController extends GetxController {
 
           Get.offAllNamed(Routes.webProfile);
         } catch (e) {
+          _isProcessing = false;
           print('Web login error: $e');
           error.value = 'Web giriş yapılamadı: $e';
         }
@@ -56,9 +65,19 @@ class WebLoginController extends GetxController {
     });
   }
 
+  void _startExpiryTimer() {                                                                                                         
+     _expiryTimer?.cancel();                                                                                                          
+     _expiryTimer = Timer(const Duration(minutes: 3), () {                                                                            
+       _sub?.cancel();                                                                                                                
+       sessionId.value = '';                                                                                                          
+       error.value = 'QR kodunun süresi doldu. Lütfen yeniden oluşturun.';                                                            
+     });                                                                                                                              
+   }     
+
   @override
   void onClose() {
     _sub?.cancel();
+    _expiryTimer?.cancel();
     super.onClose();
   }
 }

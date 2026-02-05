@@ -62,7 +62,7 @@ class OtpVerifyDialog extends StatelessWidget {
                 const SizedBox(height: 32),
 
                 PillInput(
-                  controller: otpController,
+                  controller: controller.otpTextController,
                   hint: 'Doğrulama Kodu',
                   icon: Icons.lock,
                   keyboardType: TextInputType.number,
@@ -75,7 +75,7 @@ class OtpVerifyDialog extends StatelessWidget {
                     text: 'Kodu Doğrula',
                     isLoading: controller.isLoading.value,
                     onPressed: () {
-                      controller.verifyOtp(otpController.text.trim());
+                      controller.verifyOtp(controller.otpTextController.text.trim());
                     },
                   );
                 }),

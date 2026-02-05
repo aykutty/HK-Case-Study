@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:case_study/app/routes.dart';
 import 'package:case_study/app/ui/dialogs/error_dialog.dart';
 import 'package:case_study/data/repositories/user_repository.dart';
 import 'package:case_study/app/ui/dialogs/otp_verify_dialog.dart';
@@ -12,6 +13,9 @@ class AuthController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxString verificationId = ''.obs;
   final RxString error = ''.obs;
+
+  final phoneTextController = TextEditingController();
+  final otpTextController = TextEditingController();
 
   Future<void> sendOtp(String phone) async {
     isLoading.value = true;
@@ -106,8 +110,17 @@ class AuthController extends GetxController {
       uid: firebaseUser.uid,
       phoneNumber: firebaseUser.phoneNumber ?? '',
     );
+    phoneTextController.clear();
+    otpTextController.clear();
 
     Get.back();
-    Get.offAllNamed('/profile');
+    Get.offAllNamed(Routes.profile);
+  }
+
+  @override
+  void onClose() {
+    phoneTextController.dispose();
+    otpTextController.dispose();
+    super.onClose();
   }
 }

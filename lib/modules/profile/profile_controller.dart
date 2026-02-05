@@ -1,3 +1,4 @@
+import 'package:case_study/app/routes.dart';
 import 'package:case_study/data/repositories/login_session_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:case_study/data/repositories/user_repository.dart';
 import 'package:case_study/data/models/app_user.dart';
 import 'package:case_study/modules/qr/qr_scan_page.dart';
+
 class ProfileController extends GetxController {
   final UserRepository _userRepo = Get.find<UserRepository>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -20,12 +22,16 @@ class ProfileController extends GetxController {
     _loadUser();
   }
 
+  final RxString error = ''.obs;
+
   Future<void> _loadUser() async {
     try {
       final uid = _auth.currentUser?.uid;
       if (uid == null) return;
 
       user.value = await _userRepo.getUser(uid);
+    } catch (e) {
+      error.value = 'Kullanıcı bilgileri yüklenemedi';
     } finally {
       isLoading.value = false;
     }
@@ -33,11 +39,11 @@ class ProfileController extends GetxController {
 
   Future<void> logout() async {
     await _auth.signOut();
-    Get.offAllNamed('/phone');
+    Get.offAllNamed(Routes.phone);
   }
 
   Future<void> openQrScanner() async {
-    final sessionId = await Get.to(() => QrScanPage());
+    final sessionId = await Get.to(() => const QrScanPage());
 
     if (sessionId == null) return;
 

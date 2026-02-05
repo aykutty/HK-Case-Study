@@ -17,7 +17,7 @@ class Routes {
 
 class AppPages {
   static final pages = [
-    GetPage(name: Routes.phone, page: () => PhonePage()),
+    GetPage(name: Routes.phone, page: () => const PhonePage()),
 
     GetPage(
       name: Routes.profile,

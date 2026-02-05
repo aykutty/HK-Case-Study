@@ -7,9 +7,7 @@ import 'package:case_study/app/ui/buttons/cs_custom_button.dart';
 import 'package:case_study/app/utils/phone_num_formatter.dart';
 
 class PhonePage extends GetView<AuthController> {
-  PhonePage({super.key});
-
-  final phoneController = TextEditingController();
+  const PhonePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class PhonePage extends GetView<AuthController> {
                   const SizedBox(height: 48),
 
                   PillInput(
-                    controller: phoneController,
+                    controller: controller.phoneTextController,
                     hint: 'Telefon numaranız',
                     icon: Icons.phone,
                     keyboardType: TextInputType.phone,
@@ -67,7 +65,7 @@ class PhonePage extends GetView<AuthController> {
                       isLoading: controller.isLoading.value,
                       onPressed: () {
                         final formattedPhone = formatPhoneNumber(
-                          phoneController.text,
+                          controller.phoneTextController.text,
                         );
                         controller.sendOtp(formattedPhone);
                       },

@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class QrScanPage extends StatelessWidget {
-  QrScanPage({super.key});
+class QrScanPage extends StatefulWidget {
+  const QrScanPage({super.key});
 
+  @override
+  State<QrScanPage> createState() => _QrScanPageState();
+}
+
+class _QrScanPageState extends State<QrScanPage> {
   final MobileScannerController scannerController = MobileScannerController();
+  bool _scanned = false;
+
+  @override
+  void dispose() {
+    scannerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +35,13 @@ class QrScanPage extends StatelessWidget {
       body: MobileScanner(
         controller: scannerController,
         onDetect: (BarcodeCapture capture) {
-          if (capture.barcodes.isEmpty) return;
+          if (_scanned || capture.barcodes.isEmpty) return;
 
           final String? code = capture.barcodes.first.rawValue;
 
           if (code == null || code.isEmpty) return;
 
+          _scanned = true;
           scannerController.stop();
 
           Get.back(result: code);
